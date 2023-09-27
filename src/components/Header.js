@@ -1,6 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { toggleMenu } from "../utils/appSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const toggleMenuHandler = () => {
+    dispatch(toggleMenu());
+  };
   return (
     <div className="grid grid-flow-col p-5 m-2 shadow-lg">
       {/* Left section */}
@@ -9,6 +15,7 @@ const Header = () => {
           className="h-12"
           alt="menu"
           src="https://static.vecteezy.com/system/resources/thumbnails/002/292/406/small/hamburger-menu-line-icon-free-vector.jpg"
+          onClick={toggleMenuHandler}
         />
         <img
           className="h-14"

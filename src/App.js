@@ -1,11 +1,14 @@
 import React from "react";
+import { Provider } from "react-redux";
 import "./App.css";
 import Body from "./components/Body";
 import Header from "./components/Header";
+import store from "./utils/appStore";
 const App = () => {
   return (
-    <div className="bg-red font-bold text-3xl">
-      {/*
+    <Provider store={store}>
+      <div className="">
+        {/*
       Header
       Body
         SideBar
@@ -16,9 +19,10 @@ const App = () => {
             VideoCard  
       */}
 
-      <Header />
-      <Body />
-    </div>
+        <Header />
+        <Body />
+      </div>
+    </Provider>
   );
 };
 
