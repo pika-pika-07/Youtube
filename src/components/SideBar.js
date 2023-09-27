@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const SideBar = () => {
   const showMenu = useSelector((store) => store.app.isMenuOpen);
   return showMenu ? (
-    <div className="col-span-1 shadow-lg">
+    <div className="w-[11%] shadow-lg px-4">
       <h1 className="font-bold pt-5">Likes</h1>
       <ul>
         <li> Music </li>
