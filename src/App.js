@@ -2,6 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
+import AppContainer from "./components/AppContainer";
 import Body from "./components/Body";
 import Header from "./components/Header";
 import MainContainer from "./components/MainContainer";
@@ -11,7 +12,7 @@ import store from "./utils/appStore";
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <Body />,
+    element: <AppContainer />,
     // RouterProvider will load the Body Component
     // Children will render wherever the outlet is which is in Body component below the SideBar
     children: [
@@ -41,7 +42,7 @@ const App = () => {
             VideoCard  
       */}
 
-        <Header />
+        {/* <Header /> */}
         <RouterProvider router={appRouter} />
         {/* <Body /> */}
       </div>

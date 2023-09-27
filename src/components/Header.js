@@ -1,9 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { Navigate, useNavigate } from "react-router";
 import { toggleMenu } from "../utils/appSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
   };
@@ -21,6 +23,7 @@ const Header = () => {
           className="h-14"
           alt="youtube logo"
           src="https://i0.wp.com/www.dafontfree.io/wp-content/uploads/2021/08/Youtube-Logo-Font.jpg?resize=849%2C395&ssl=1"
+          onClick={() => navigate("/")}
         />
       </div>
       {/* // Middle section */}
