@@ -1,9 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router";
 import { toggleMenu } from "../utils/appSlice";
+import { YOUTUBE_SEARCH_API } from "../utils/constants";
 
 const Header = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  let timerId = null;
+
+  useEffect(() => {
+    // Make an api call after every key press
+    // but if the difeerence between 2 api calls is less than 200ms decline API call
+    const timerId = setTimeout(() => {
+      getSearchSuggestions();
+    }, 200);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchQuery]);
+
+  /**
+   * keypress - i
+   * render the component
+   * useEffect() is called
+   * start timer => make api call after 200ms
+   *
+   * keypress -ip
+   * destroy the component( useEffect return method is called)
+   * re-render the component
+   * useEffect() is called
+   * start timer => make api call after 200ms
+   *
+   * and so on with everykeypress
+   *
+   * So as we are clearing the timer on every re-render
+   * so if we press key before 200ms
+   * first the old timer will be destroyed
+   * so the api call will not be made
+   *
+   * This is an implementation of debouncing in Reactjs
+   */
+
+  const getSearchSuggestions = async () => {
+    const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
+    const json = await data.json();
+    setSuggestions(json[1]);
+  };
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toggleMenuHandler = () => {
@@ -27,15 +73,37 @@ const Header = () => {
         />
       </div>
       {/* // Middle section */}
-      <div className="flex col-span-10 justify-center">
-        <input
-          type="text"
-          className="w-1/2 border border-gray-400 h-11 rounded-l-full p-2"
-        />
-        <button className="border border-gray-400 h-11 rounded-r-full px-6 bg-gray-100">
-          {" "}
-          🔎
-        </button>
+      <div className="flex flex-col col-span-10 justify-center ">
+        <div>
+          <input
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            type="text"
+            placeholder="Search"
+            className="w-1/2 border border-gray-400 h-11 rounded-l-full p-2"
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setShowSuggestions(false)}
+          />
+          <button className="border border-gray-400 h-11 rounded-r-full px-6 bg-gray-100">
+            {" "}
+            🔎
+          </button>
+        </div>
+        {showSuggestions && (
+          <div className="absolute bg-white top-[80px] w-[36%] py-2 px-2 rounded-lg border border-gray-100">
+            <ul>
+              {suggestions.map((suggestion) => (
+                <li
+                  key={suggestion}
+                  className="py-2 px-2 shadow-sm hover:bg-gray-100"
+                >
+                  {" "}
+                  🔎 {suggestion}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Right section */}
