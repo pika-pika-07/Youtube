@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router";
 import { toggleMenu } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
+import { cacheSuggestions } from "../utils/searchSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchCache = useSelector((state) => state.search.searchMap);
   let timerId = null;
 
   useEffect(() => {
     // Make an api call after every key press
     // but if the difeerence between 2 api calls is less than 200ms decline API call
     const timerId = setTimeout(() => {
-      getSearchSuggestions();
+      if (searchCache[searchQuery]) {
+        setSuggestions(searchCache[searchQuery]);
+      } else {
+        getSearchSuggestions();
+      }
     }, 200);
 
     return () => {
@@ -45,16 +54,35 @@ const Header = () => {
    */
 
   const getSearchSuggestions = async () => {
+    /**
+     * SearchCache structure
+     *
+     * {
+     *  "iphone" : [ 'iphone11', 'iphone12']
+     * },
+     * {
+     *   'parth' ; [ 'Parth11', 'Parth12', 'Parth13']
+     * }
+     */
+
+    // If search query present , dont make api call
+
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const json = await data.json();
     setSuggestions(json[1]);
+
+    // Update Cache
+    dispatch(
+      cacheSuggestions({
+        [searchQuery]: json[1],
+      })
+    );
   };
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
   };
+
   return (
     <div className="grid grid-flow-col p-5 m-2 shadow-lg">
       {/* Left section */}
