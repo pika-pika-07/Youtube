@@ -18,7 +18,7 @@ const Results = () => {
 
   useEffect(() => {
     handleSuggestionClick();
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="flex flex-wrap">
