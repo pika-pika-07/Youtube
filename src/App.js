@@ -6,6 +6,7 @@ import AppContainer from "./components/AppContainer";
 import Body from "./components/Body";
 import Header from "./components/Header";
 import MainContainer from "./components/MainContainer";
+import Results from "./components/Results";
 import WatchPage from "./components/WatchPage";
 import store from "./utils/appStore";
 
@@ -23,6 +24,10 @@ const appRouter = createBrowserRouter([
       {
         path: "watch",
         element: <WatchPage />,
+      },
+      {
+        path: "results",
+        element: <Results />,
       },
     ],
   },

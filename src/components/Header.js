@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { toggleMenu } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
 import { cacheSuggestions } from "../utils/searchSlice";
@@ -110,7 +111,11 @@ const Header = () => {
             placeholder="Search"
             className="w-1/2 border border-gray-400 h-11 rounded-l-full p-2"
             onFocus={() => setShowSuggestions(true)}
-            onBlur={() => setShowSuggestions(false)}
+            onBlur={() =>
+              setTimeout(() => {
+                setShowSuggestions(false);
+              }, 100)
+            }
           />
           <button className="border border-gray-400 h-11 rounded-r-full px-6 bg-gray-100">
             {" "}
@@ -121,13 +126,15 @@ const Header = () => {
           <div className="absolute bg-white top-[80px] w-[36%] py-2 px-2 rounded-lg border border-gray-100">
             <ul>
               {suggestions.map((suggestion) => (
-                <li
+                <Link
                   key={suggestion}
-                  className="py-2 px-2 shadow-sm hover:bg-gray-100"
+                  to={`/results?search_query=${suggestion}`}
                 >
-                  {" "}
-                  🔎 {suggestion}
-                </li>
+                  <li className="py-2 px-2 shadow-sm hover:bg-gray-100">
+                    {" "}
+                    🔎 {suggestion}
+                  </li>
+                </Link>
               ))}
             </ul>
           </div>
