@@ -15,7 +15,7 @@ const chatSlice = createSlice({
         // So to optimise we need to delete older messages
         state.messages.splice(OFFSET_LIVE_CHAT, 1);
       }
-      state.messages.unshift(action.payload);
+      state.messages.push(action.payload);
     },
   },
 });
