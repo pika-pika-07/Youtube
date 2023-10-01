@@ -1,0 +1,6 @@
+[[redirects]]
+  from = "http://suggestqueries.google.com"
+  to = "https://cors-anywhere.herokuapp.com/"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
