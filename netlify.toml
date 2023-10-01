@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "http://localhost:3000"
+  from = "https://master--myy-youtube.netlify.app"
   to = "http://suggestqueries.google.com/complete/search?client=chrome&ds=yt&q="
   status = 200
   force = true
