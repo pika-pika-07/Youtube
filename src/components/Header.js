@@ -68,7 +68,15 @@ const Header = () => {
 
     // If search query present , dont make api call
 
-    const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
+    const url = `${YOUTUBE_SEARCH_API}${searchQuery}`;
+
+    const data = await fetch(url, {
+      // mode: "cors",
+      // crossorigin: true,
+      // headers: {
+      //   "Access-Control-Allow-Origin": "*",
+      // },
+    });
     const json = await data.json();
     setSuggestions(json[1]);
 
