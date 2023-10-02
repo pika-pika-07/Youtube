@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/*"
+  to = "https://cors-anywhere.herokuapp.com/:splat 200"
+  status = 200
+  force = true
