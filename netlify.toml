@@ -1,6 +1,6 @@
 [[redirects]]
   from = "http://suggestqueries.google.com/complete/search?client=chrome&ds=yt&q="
-  to = "https://cors-anywhere.herokuapp.com/"
+  to = "http://suggestqueries.google.com/complete/search?client=chrome&ds=yt&q="
   status = 200
   force = true
   headers = {X-From = "Netlify"}
