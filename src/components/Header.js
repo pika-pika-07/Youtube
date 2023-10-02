@@ -69,7 +69,7 @@ const Header = () => {
     // If search query present , dont make api call
     const test =
       "https://www.google.com/complete/search?client=chrome&ds=yt&q=%";
-    const url = `/cors-proxy/${YOUTUBE_SEARCH_API}${searchQuery}`;
+    const url = `https://cors-anywhere.herokuapp.com/${YOUTUBE_SEARCH_API}${searchQuery}`;
 
     const data = await fetch(url, {
       // mode: "cors",
